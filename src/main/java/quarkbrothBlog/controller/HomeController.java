@@ -25,7 +25,6 @@ public class HomeController {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ArticleRepository articleRepository;
 

@@ -7,24 +7,27 @@
                         <h2 th:text="${article.title}"></h2>
                     </header>
 
-                    <p th:text="${article.content}"> </p>
+                    <p th:text="${article.content}"></p>
 
                     <small class="author" th:text="${article.author.fullName}"></small>
 
                     <p>
-                        <a class="btn btn-default btn-xs" th:each="tag:${article.tags}" th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
+                        <a class="btn btn-default btn-xs" th:each="tag:${article.tags}"
+                           th:href="@{/tag/{name}(name=${tag.name})}" th:text="${tag.name}"></a>
                     </p>
 
 
                     <footer>
 
                         <div class="pull-right">
-                            <th:block sec:authorize = "isAuthenticated()" th:if="${user.isAdmin() OR user.isAuthor(article)}">
-                            <a class="btn btn-success btn-xs" th:href="@{/article/edit/{id}(id = ${article.id})}">Edit</a>
-                            <a class="btn btn-danger btn-xs" th:href="@{/article/delete/{id}(id = ${article.id})}">Delete</a>
+                            <th:block sec:authorize="isAuthenticated()"
+                                      th:if="${user.isAdmin() OR user.isAuthor(article)}">
+                                <a class="btn btn-success btn-xs" th:href="@{/article/edit/{id}(id = ${article.id})}">Edit</a>
+                                <a class="btn btn-danger btn-xs" th:href="@{/article/delete/{id}(id = ${article.id})}">Delete</a>
                             </th:block>
-                            <a class="btn btn-default btn-xs" th:href="@{/}">back &raquo;</a>
+                            <a class="btn btn-default btn-xs" th:href="@{/category/{id}(id = ${article.category.id})}">back &raquo;</a>
                         </div>
+
                     </footer>
                 </article>
 
@@ -37,17 +40,18 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-sm-1">Comment</label> <br/> <br/>
-                                    <div class="col-sm-8">
-                                            <textarea class="form-control" style="min-width: 109%"
+                                    <div class="col-sm-9">
+                                            <textarea class="form-control"
+                                                      style="min-width: 100%; resize: vertical;"
                                                       rows="3"
                                                       name="comment"
                                                       placeholder="Write comment..."></textarea>
                                     </div>
-                                </div>
 
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary btn-xs col-sm-offset-7"
-                                           value="Post comment"/>
+                                    <div class="col-sm-9">
+                                        <input type="submit" class="btn btn-primary btn-xs pull-right"
+                                               value="Post comment"/>
+                                    </div>
                                 </div>
 
                             </fieldset>

@@ -33,7 +33,6 @@ public class ArticleController {
     @Autowired
     private CommentRepository commentRepository;
 
-
     @GetMapping("/article/create")
     @PreAuthorize("isAuthenticated()")
     public String create(Model model){
@@ -54,8 +53,6 @@ public class ArticleController {
         User userEntity = this.userRepository.findByEmail(user.getUsername());
         Category category = this.categoryRepository.findOne(articleBindingModel.getCategoryId());
         HashSet<Tag> tags = this.findTagsFromString(articleBindingModel.getTagString());
-
-
 
         Article articleEntity = new Article(
                 articleBindingModel.getTitle(),

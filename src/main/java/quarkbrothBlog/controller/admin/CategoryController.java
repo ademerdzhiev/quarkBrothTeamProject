@@ -31,8 +31,6 @@ public class CategoryController{
     @Autowired
     private CommentRepository commentRepository;
 
-
-
     @GetMapping("/")
     public String list(Model model){
         model.addAttribute("view", "admin/category/list");

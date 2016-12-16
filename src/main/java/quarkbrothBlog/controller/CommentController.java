@@ -24,16 +24,10 @@ public class CommentController {
 
     @Autowired
     ArticleRepository articleRepository;
-
     @Autowired
     UserRepository userRepository;
-
     @Autowired
     CommentRepository commentRepository;
-
-
-
-
 
     @PostMapping("/article/{id}")
     @PreAuthorize("isAuthenticated()")
@@ -138,10 +132,6 @@ public class CommentController {
 
         return "redirect:/article/" + article.getId();
     }
-
-
-
-
 
     private boolean isUserCommenterOrAdmin(Comment comment) {
         UserDetails user = (UserDetails) SecurityContextHolder.getContext()

@@ -10,6 +10,7 @@ import quarkbrothBlog.repository.TagRepository;
 
 @Controller
 public class TagController {
+
     @Autowired
     private TagRepository tagRepository;
 

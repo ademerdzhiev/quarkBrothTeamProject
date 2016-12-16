@@ -37,10 +37,6 @@ public class AdminUserController {
     @Autowired
     private CommentRepository commentRepository;
 
-
-
-
-
     @GetMapping("/")
     public String listUsers(Model model){
         List<User> users = this.userRepository.findAll();
