@@ -1,7 +1,6 @@
 package quarkbrothBlog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,10 +15,10 @@ import quarkbrothBlog.entity.Article;
 import quarkbrothBlog.entity.Category;
 import quarkbrothBlog.entity.Tag;
 import quarkbrothBlog.entity.User;
+import quarkbrothBlog.repository.ArticleRepository;
 import quarkbrothBlog.repository.CategoryRepository;
 import quarkbrothBlog.repository.TagRepository;
 import quarkbrothBlog.repository.UserRepository;
-import quarkbrothBlog.repository.ArticleRepository;
 
 import java.util.HashSet;
 import java.util.List;
@@ -60,6 +59,8 @@ public class ArticleController {
         Category category = this.categoryRepository.findOne(articleBindingModel.getCategoryId());
         HashSet<Tag> tags = this.findTagsFromString(articleBindingModel.getTagString());
 
+
+
         Article articleEntity = new Article(
                 articleBindingModel.getTitle(),
                 articleBindingModel.getContent(),
@@ -67,6 +68,7 @@ public class ArticleController {
                 category,
                 tags
         );
+
 
         this.articleRepository.saveAndFlush(articleEntity);
 
@@ -211,5 +213,4 @@ public class ArticleController {
 
         return tags;
     }
-
 }

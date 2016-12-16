@@ -1,48 +1,38 @@
 /*package quarkbrothBlog.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
-import quarkbrothBlog.bindingModel.FileBindingModel;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.SimpleFormController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
-import javax.servlet.ServletRequest;
-import java.io.File;
-import java.io.IOException;
+public class FileController extends  ArticleController{
 
-@Controller
-public class FileController {
-
-   /* @GetMapping("/file/upload")
-    public String file(Model model) {
-        model.addAttribute("view", "file/upload");
-
-        return "base-layout";
+    public FileUploadController(){
+        setCommandClass(FileUpload.class);
+        setCommandName("fileUploadForm");
     }
-*/
-/*
-    @PostMapping("/file/upload")
-    public String UploadFile(FileBindingModel fileBindingModel){
 
-        MultipartFile file = fileBindingModel.getPicture();
+    @Override
+    protected ModelAndView onSubmit(HttpServletRequest request,
+                                    HttpServletResponse response, Object command, BindException errors)
+            throws Exception {
 
-        if (file !=null){
-            String originalFilename = file.getOriginalFilename();
-            File imageFile = new File
-                    ("C:\\Users\\Angel\\Desktop" +
-                    "\\Homework-AngelD-Java- Blog Advanced Functionality - Exercises - Copy\\pics", originalFilename);
-            try{
-                file.transferTo(imageFile);
-                article.setImagePath(imageFile.getPath());
-                //System.out.println(imageFile.getPath());
-            } catch (IOException e){
-                e.printStackTrace();
-            }
+        FileUpload file = (FileUpload)command;
+
+        MultipartFile multipartFile = file.getFile();
+
+        String fileName="";
+
+        if(multipartFile!=null){
+            fileName = multipartFile.getOriginalFilename();
+            //do whatever you want
         }
 
-        return "redirect:/";
-    }
-}
-*/
+        return new ModelAndView("FileUploadSuccess","fileName",fileName);
+
+    }*/

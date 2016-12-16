@@ -7,11 +7,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.thymeleaf.util.StringUtils;
 import quarkbrothBlog.entity.Article;
 import quarkbrothBlog.entity.Category;
 import quarkbrothBlog.repository.CategoryRepository;
+import quarkbrothBlog.repository.ArticleRepository;
 
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 @Controller
@@ -19,6 +25,9 @@ public class HomeController {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ArticleRepository articleRepository;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -53,4 +62,30 @@ public class HomeController {
 
         return "base-layout";
     }
+
+    @GetMapping("/search")
+    public String search(HttpServletRequest request, Model model) {
+        String query = request.getParameter("query");
+
+        List<Article> articles = this.articleRepository.findAll();
+        List<Article> articlesWithQuery = new ArrayList<>();
+
+        Locale locale = new Locale("en-US");
+        for (Article article : articles) {
+            if (StringUtils.containsIgnoreCase(article.getContent(), query, locale)) {
+                articlesWithQuery.add(article);
+            }
+        }
+        if(!query.equals("")){
+            model.addAttribute("query", query);
+        }else{
+            model.addAttribute("query", " ");
+        }
+
+        model.addAttribute("articles", articlesWithQuery);
+        model.addAttribute("view", "home/search");
+
+        return "base-layout";
+    }
+
 }
