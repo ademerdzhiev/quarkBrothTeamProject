@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import quarkbrothBlog.bindingModel.UserEditBindingModel;
 import quarkbrothBlog.entity.Article;
+import quarkbrothBlog.entity.Comment;
 import quarkbrothBlog.entity.Role;
 import quarkbrothBlog.entity.User;
 import quarkbrothBlog.repository.ArticleRepository;
+import quarkbrothBlog.repository.CommentRepository;
 import quarkbrothBlog.repository.RoleRepository;
 import quarkbrothBlog.repository.UserRepository;
 
@@ -32,6 +34,12 @@ public class AdminUserController {
     private ArticleRepository articleRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+
+
+
+
 
     @GetMapping("/")
     public String listUsers(Model model){
@@ -115,6 +123,10 @@ public class AdminUserController {
             return "redirect:/admin/users/";
         }
         User user = this.userRepository.findOne(id);
+
+        for(Comment comment : user.getComments()){
+            this.commentRepository.delete(comment);
+        }
 
         for(Article article : user.getArticles()){
             this.articleRepository.delete(article);

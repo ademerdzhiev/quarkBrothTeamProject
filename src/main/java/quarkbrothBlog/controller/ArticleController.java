@@ -11,15 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import quarkbrothBlog.bindingModel.ArticleBindingModel;
-import quarkbrothBlog.entity.Article;
-import quarkbrothBlog.entity.Category;
-import quarkbrothBlog.entity.Tag;
-import quarkbrothBlog.entity.User;
-import quarkbrothBlog.repository.ArticleRepository;
-import quarkbrothBlog.repository.CategoryRepository;
-import quarkbrothBlog.repository.TagRepository;
-import quarkbrothBlog.repository.UserRepository;
+import quarkbrothBlog.entity.*;
+import quarkbrothBlog.repository.*;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,9 +28,10 @@ public class ArticleController {
     private UserRepository userRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private TagRepository tagRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
 
     @GetMapping("/article/create")
@@ -90,9 +86,14 @@ public class ArticleController {
             model.addAttribute("user", entityUser);
         }
 
-
         Article article = this.articleRepository.findOne(id);
 
+        List<Comment> comments = this.commentRepository.findByArticle(article);
+        comments.stream()
+                .sorted((object1, object2) -> object1.getId().compareTo(object2.getId()));
+        Collections.reverse(comments);
+
+        model.addAttribute("comments", comments);
         model.addAttribute("article", article);
         model.addAttribute("view", "article/details");
 
@@ -180,6 +181,10 @@ public class ArticleController {
 
         if(!isUserAuthOrAdmin(article)){
             return "redirect:/article/" + id;
+        }
+
+        for(Comment comment : article.getComments()){
+            this.commentRepository.delete(comment);
         }
 
         this.articleRepository.delete(article);

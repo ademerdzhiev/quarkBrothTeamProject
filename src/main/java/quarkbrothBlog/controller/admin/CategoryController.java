@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import quarkbrothBlog.bindingModel.CategoryBindingModel;
 import quarkbrothBlog.entity.Article;
 import quarkbrothBlog.entity.Category;
+import quarkbrothBlog.entity.Comment;
 import quarkbrothBlog.repository.ArticleRepository;
 import quarkbrothBlog.repository.CategoryRepository;
+import quarkbrothBlog.repository.CommentRepository;
 
 import java.util.Comparator;
 import java.util.List;
@@ -26,6 +28,10 @@ public class CategoryController{
     private CategoryRepository categoryRepository;
     @Autowired
     private ArticleRepository articleRepository;
+    @Autowired
+    private CommentRepository commentRepository;
+
+
 
     @GetMapping("/")
     public String list(Model model){
@@ -111,6 +117,10 @@ public class CategoryController{
         Category category = this.categoryRepository.findOne(id);
 
         for(Article article : category.getArticles()){
+            for(Comment comment : article.getComments()){
+                this.commentRepository.delete(comment);
+            }
+
             this.articleRepository.delete(article);
         }
 

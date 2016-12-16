@@ -27,6 +27,61 @@
                         </div>
                     </footer>
                 </article>
+
+                <br/>
+
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="container body-content span=10">
+                        <form class="form-horizontal" th:action="@{/article/{id}(id=${article.id})}" method="POST">
+                            <fieldset>
+
+                                <div class="form-group">
+                                    <label class="control-label col-sm-1">Comment</label> <br/> <br/>
+                                    <div class="col-sm-8">
+                                            <textarea class="form-control" style="min-width: 109%"
+                                                      rows="3"
+                                                      name="comment"
+                                                      placeholder="Write comment..."></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-xs col-sm-offset-7"
+                                           value="Post comment"/>
+                                </div>
+
+                            </fieldset>
+                        </form>
+                    </div>
+                </th:block>
+
+                <h4 th:text="${'Comments (' + #sets.size(article.comments) + ')'}"></h4>
+
+
+                <th:block th:each="comment : ${comments}">
+                    <div class="col-md-12">
+                        <hr/>
+
+                        <div class="pull-right">
+
+                            <th:block sec:authorize="isAuthenticated()"
+                                      th:if="${user.isAdmin() OR comment.isCommenter(user.id)}">
+                                <a class="btn btn-success btn-xs" th:href="@{/comment/edit/{id}(id = ${comment.id})}">Edit</a>
+                                <a class="btn btn-danger btn-xs" th:href="@{/comment/delete/{id}(id = ${comment.id})}">Delete</a>
+                            </th:block>
+                        </div>
+
+                        <p>
+                        <h4 th:text="${comment.user.fullName}"></h4>
+                        </p>
+
+                        <p th:text="${comment.comment}"></p>
+
+                        <small class="date" th:text="${comment.date}"></small>
+
+                    </div>
+                </th:block>
+
             </div>
         </div>
     </div>

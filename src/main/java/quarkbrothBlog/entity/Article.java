@@ -15,6 +15,8 @@ public class Article {
     private Category category;
     //private Tag tag;
 
+    private Set<Comment> comments;
+
     public Article(){
 
     }
@@ -90,6 +92,15 @@ public class Article {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    @OneToMany(mappedBy = "article")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 }
 

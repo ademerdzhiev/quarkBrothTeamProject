@@ -19,6 +19,11 @@ public class User {
 
     private Set<Role> roles;
 
+    private Set<Comment> comments;
+
+
+
+
     @OneToMany(mappedBy = "author")
     public Set<Article> getArticles() {
         return articles;
@@ -92,6 +97,18 @@ public class User {
     public void addRole(Role role) {
         this.roles.add(role);
     }
+
+    @OneToMany(mappedBy = "user")
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+
+
 
     @Transient
     public boolean isAdmin(){
