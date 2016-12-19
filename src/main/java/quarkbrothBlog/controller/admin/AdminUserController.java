@@ -20,6 +20,10 @@ import quarkbrothBlog.repository.CommentRepository;
 import quarkbrothBlog.repository.RoleRepository;
 import quarkbrothBlog.repository.UserRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -125,6 +129,19 @@ public class AdminUserController {
         }
 
         for(Article article : user.getArticles()){
+            if (article.getImageName() != null) {
+                try {
+                    Files.deleteIfExists(Paths.get(
+                            new File("").getAbsolutePath() +                        // get project path
+                                    "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
+                                    article.getImageName()                          // image name
+                    ));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
             this.articleRepository.delete(article);
         }
 

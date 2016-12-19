@@ -1,6 +1,8 @@
 package quarkbrothBlog.entity;
 
 import javax.persistence.*;
+import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,17 +18,20 @@ public class Article {
     //private Tag tag;
 
     private Set<Comment> comments;
+    private String imageName;
 
     public Article(){
 
     }
 
-    public Article(String title, String content, User author, Category category, HashSet<Tag> tags) {
+    public Article(String title, String content, User author, Category category,
+                   HashSet<Tag> tags, String imageName) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.category = category;
         this.tags = tags;
+        this.imageName = imageName;
     }
 
     @Id
@@ -101,6 +106,14 @@ public class Article {
 
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 }
 

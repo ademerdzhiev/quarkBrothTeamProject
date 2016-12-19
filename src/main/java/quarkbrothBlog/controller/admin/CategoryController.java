@@ -16,6 +16,10 @@ import quarkbrothBlog.repository.ArticleRepository;
 import quarkbrothBlog.repository.CategoryRepository;
 import quarkbrothBlog.repository.CommentRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -117,6 +121,19 @@ public class CategoryController{
         for(Article article : category.getArticles()){
             for(Comment comment : article.getComments()){
                 this.commentRepository.delete(comment);
+            }
+
+            if (article.getImageName() != null) {
+                try {
+                    Files.deleteIfExists(Paths.get(
+                            new File("").getAbsolutePath() +                        // get project path
+                                    "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
+                                    article.getImageName()                          // image name
+                    ));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             this.articleRepository.delete(article);

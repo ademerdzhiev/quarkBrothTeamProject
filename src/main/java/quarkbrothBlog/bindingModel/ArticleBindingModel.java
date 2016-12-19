@@ -12,6 +12,7 @@ public class ArticleBindingModel {
 
     private String tagString;
 
+
     public String getTitle() {
         return title;
     }
