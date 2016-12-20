@@ -3,6 +3,7 @@ package quarkbrothBlog.entity;
 import javax.persistence.*;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ public class Article {
     private Integer id;
     private String title;
     private String content;
+    private String date;
     private User author;
     private Category category;
     //private Tag tag;
@@ -24,10 +26,11 @@ public class Article {
 
     }
 
-    public Article(String title, String content, User author, Category category,
+    public Article(String title, String content, String date, User author, Category category,
                    HashSet<Tag> tags, String imageName) {
         this.title = title;
         this.content = content;
+        this.date = new Date().toString();
         this.author = author;
         this.category = category;
         this.tags = tags;
@@ -62,6 +65,15 @@ public class Article {
         this.content = content;
     }
 
+    @Column(nullable = false)
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @ManyToOne()
     @JoinColumn(nullable = false, name = "authorId")
     public User getAuthor() {
@@ -76,6 +88,8 @@ public class Article {
     public String getSummary(){
         return this.getContent().substring(0, this.getContent().length()/2 )+ "...";
     }
+
+
 
     @ManyToOne()
     @JoinColumn(nullable = false, name = "categoryId")

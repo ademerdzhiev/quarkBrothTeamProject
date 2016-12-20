@@ -16,6 +16,8 @@
 
 
                     <small class="author" th:text="${article.author.fullName}"></small>
+                    <small class="date" th:text="${article.date}"></small>
+
 
                     <p>
                         <a class="btn btn-default btn-xs" th:each="tag:${article.tags}"
