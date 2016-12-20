@@ -18,6 +18,7 @@ public class Article {
     private User author;
     private Category category;
     //private Tag tag;
+    private int viewCount;
 
     private Set<Comment> comments;
     private String imageName;
@@ -112,6 +113,10 @@ public class Article {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
+    public int getViewCount(){return viewCount;}
+
+    public void setViewCount(int viewCount){this.viewCount = viewCount;}
 
     @OneToMany(mappedBy = "article")
     public Set<Comment> getComments() {

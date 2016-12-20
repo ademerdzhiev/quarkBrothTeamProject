@@ -29,6 +29,12 @@ public class ArticleBindingModel {
         this.content = content;
     }
 
+    private Integer viewCount;
+
+    //public Integer getViewCount(){return viewCount;}
+
+    //public void setViewCount(Integer viewCount){this.viewCount = viewCount;}
+
     private Integer categoryId;
 
     public Integer getCategoryId() {

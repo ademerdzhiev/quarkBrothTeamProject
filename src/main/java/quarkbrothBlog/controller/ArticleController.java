@@ -119,6 +119,8 @@ public class ArticleController {
         }
 
         Article article = this.articleRepository.findOne(id);
+        article.setViewCount(article.getViewCount() + 1);
+        this.articleRepository.saveAndFlush(article);
 
         List<Comment> comments = this.commentRepository.findByArticle(article);
         comments.stream()
@@ -127,6 +129,7 @@ public class ArticleController {
 
         model.addAttribute("comments", comments);
         model.addAttribute("article", article);
+        model.addAttribute("");
         model.addAttribute("view", "article/details");
 
         return "base-layout";
