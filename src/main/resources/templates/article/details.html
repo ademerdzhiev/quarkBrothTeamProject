@@ -15,7 +15,7 @@
 
                     <th:block th:if="${article.imageName != '' AND article.imageName != null}">
                         <img class="img-responsive" th:src="@{/pics/{image}(image = ${article.imageName})}"
-                             style="margin: 0 auto" />
+                             style="margin: 0 auto"/>
                     </th:block>
 
 
@@ -71,13 +71,10 @@
 
                 <h4 th:text="${'Comments (' + #sets.size(article.comments) + ')'}"></h4>
 
-
                 <th:block th:each="comment : ${comments}">
 
-
-                    <div class="col-md-8">
+                    <div class="col-sm-12">
                         <hr/>
-
                         <div class="col-sm-2">
                             <th:block th:if="${comment.user.avatarName != '' AND comment.user.avatarName != null}">
                                 <img class="img-thumbnail"
@@ -85,21 +82,19 @@
                             </th:block>
                         </div>
 
+                        <div class="pull-right">
+                            <th:block sec:authorize="isAuthenticated()"
+                                      th:if="${user.isAdmin() OR comment.isCommenter(user.id)}">
+
+                                <a class="btn btn-success btn-xs"
+                                   th:href="@{/comment/edit/{id}(id = ${comment.id})}">Edit</a>
+
+                                <a class="btn btn-danger btn-xs"
+                                   th:href="@{/comment/delete/{id}(id = ${comment.id})}">Delete</a>
+                            </th:block>
+                        </div>
+
                         <div class="col-sm-offset-2">
-
-                            <div class="pull-right">
-
-                                <th:block sec:authorize="isAuthenticated()"
-                                          th:if="${user.isAdmin() OR comment.isCommenter(user.id)}">
-
-                                    <a class="btn btn-success btn-xs"
-                                       th:href="@{/comment/edit/{id}(id = ${comment.id})}">Edit</a>
-
-                                    <a class="btn btn-danger btn-xs"
-                                       th:href="@{/comment/delete/{id}(id = ${comment.id})}">Delete</a>
-                                </th:block>
-                            </div>
-
                             <p>
                                 <a th:href="@{/profile/{id}(id=${comment.user.id})}"
                                    th:text="${comment.user.fullName}"> </a>
@@ -107,12 +102,12 @@
 
                             <p th:text="${comment.comment}"></p>
 
+                            <br/>
+
                             <small class="date" th:text="${comment.date}"></small>
-
                         </div>
-
-
                     </div>
+
                 </th:block>
 
             </div>

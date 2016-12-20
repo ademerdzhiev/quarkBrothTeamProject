@@ -5,6 +5,7 @@
                   enctype="multipart/form-data">
                 <fieldset>
                     <legend>Edit User</legend>
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_email">Email</label>
                         <div class="col-sm-4 ">
@@ -12,6 +13,7 @@
                                    required="required" th:value="${user.email}"/>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_fullname">Full Name</label>
                         <div class="col-sm-4 ">
@@ -19,6 +21,7 @@
                                    name="fullName" required="required" th:value="${user.fullName}"/>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_password_first">Password</label>
                         <div class="col-sm-4">
@@ -26,6 +29,7 @@
                                    name="password"/>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-4 control-label" for="user_password_second">Confirm Password</label>
                         <div class="col-sm-4">
@@ -47,6 +51,7 @@
                             <input value="Edit" type="submit" class="btn btn-success"/>
                         </div>
                     </div>
+
                 </fieldset>
             </form>
         </div>

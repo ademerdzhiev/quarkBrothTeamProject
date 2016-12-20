@@ -103,7 +103,7 @@ public class AdminUserController {
         int index = image.getOriginalFilename().lastIndexOf(".");
         if(index != -1){
 
-            // Delete current article picture if there is one
+            // Delete current profile picture if there is one
             if (!user.getAvatarName().equals("Quark_structure_proton.jpg")) {
                 try {
                     Files.deleteIfExists(Paths.get(
@@ -187,19 +187,6 @@ public class AdminUserController {
 
             this.articleRepository.delete(article);
         }
-
-        if(!user.getAvatarName().equals("Quark_structure_proton.jpg")){
-            try {
-                Files.deleteIfExists(Paths.get(
-                        new File("").getAbsolutePath() +                        // get project path
-                                "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
-                                user.getAvatarName()                            // image name
-                ));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
 
         if(!user.getAvatarName().equals("Quark_structure_proton.jpg")){
             try {

@@ -45,6 +45,7 @@ public class User {
 
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
+        this.avatarName = avatarName;
     }
 
     public User() {    }
@@ -110,6 +111,14 @@ public class User {
         this.comments = comments;
     }
 
+    @Column(name = "avatarName")
+    public String getAvatarName() {
+        return avatarName;
+    }
+
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
 
 
 
@@ -124,15 +133,6 @@ public class User {
     public boolean isAuthor(Article article) {
         return Objects.equals(this.getId(),
         article.getAuthor().getId());
-    }
-
-    @Column(name = "avatarName")
-    public String getAvatarName() {
-        return avatarName;
-    }
-
-    public void setAvatarName(String avatarName) {
-        this.avatarName = avatarName;
     }
 
     @Transient

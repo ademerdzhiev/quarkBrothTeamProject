@@ -130,8 +130,7 @@ public class UserController {
 
     @GetMapping("/profile/edit/{id}")
     @PreAuthorize("isAuthenticated()")
-    public String profileEdit(Model model,@PathVariable Integer id,
-                              UserBindingModel userBindingModel){
+    public String profileEdit(Model model,@PathVariable Integer id){
 
         if(!this.userRepository.exists(id)){
             return "redirect:/";
@@ -172,7 +171,7 @@ public class UserController {
         int index = image.getOriginalFilename().lastIndexOf(".");
         if(index != -1){
 
-            // Delete current article picture if there is one
+            // Delete current profile picture if there is one
             if (!user.getAvatarName().equals("Quark_structure_proton.jpg")) {
                 try {
                     Files.deleteIfExists(Paths.get(
@@ -212,7 +211,7 @@ public class UserController {
 
         this.userRepository.saveAndFlush(user);
 
-        return "redirect:/profile";
+        return "redirect:/profile/" + user.getId();
 
     }
 
