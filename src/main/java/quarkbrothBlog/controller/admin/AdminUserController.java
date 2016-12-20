@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import quarkbrothBlog.bindingModel.FileBindingModel;
 import quarkbrothBlog.bindingModel.UserEditBindingModel;
 import quarkbrothBlog.entity.Article;
 import quarkbrothBlog.entity.Comment;
@@ -27,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/admin/users/")
@@ -69,7 +72,7 @@ public class AdminUserController {
 
     @PostMapping("/edit/{id}")
     public String editProcess(@PathVariable Integer id,
-                              UserEditBindingModel userBindingModel){
+                              UserEditBindingModel userBindingModel, FileBindingModel fileBindingModel){
         if(!this.userRepository.exists(id)){
             return "redirect:/admin/users/";
         }
@@ -95,6 +98,46 @@ public class AdminUserController {
         }
 
         user.setRoles(roles);
+
+        MultipartFile image = fileBindingModel.getPicture();
+        int index = image.getOriginalFilename().lastIndexOf(".");
+        if(index != -1){
+
+            // Delete current article picture if there is one
+            if (!user.getAvatarName().equals("Quark_structure_proton.jpg")) {
+                try {
+                    Files.deleteIfExists(Paths.get(
+                            new File("").getAbsolutePath() +                        // get project path
+                                    "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
+                                    user.getAvatarName()                            // image name
+                    ));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Add new picture
+            String extension = image.getOriginalFilename().substring(index);
+            if (extension.equals(".jpg") ||
+                    extension.equals(".png") ||
+                    extension.equals(".bmp") ||
+                    extension.equals(".gif")) {
+
+                String hashedFileName = UUID.randomUUID().toString().concat(extension);
+                File imageFile = new File(new File("").getAbsolutePath() +      // get project path
+                        "\\src\\main\\resources\\static\\pics\\",               // pics folder path
+                        hashedFileName);                                        // image name
+
+                try {
+                    image.transferTo(imageFile);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                user.setAvatarName(hashedFileName);
+            }
+        }
+
 
         this.userRepository.saveAndFlush(user);
 
@@ -143,6 +186,31 @@ public class AdminUserController {
             }
 
             this.articleRepository.delete(article);
+        }
+
+        if(!user.getAvatarName().equals("Quark_structure_proton.jpg")){
+            try {
+                Files.deleteIfExists(Paths.get(
+                        new File("").getAbsolutePath() +                        // get project path
+                                "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
+                                user.getAvatarName()                            // image name
+                ));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(!user.getAvatarName().equals("Quark_structure_proton.jpg")){
+            try {
+                Files.deleteIfExists(Paths.get(
+                        new File("").getAbsolutePath() +                        // get project path
+                                "\\src\\main\\resources\\static\\pics\\" +      // get pics folder path
+                                user.getAvatarName()                            // image name
+                ));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         this.userRepository.delete(user);

@@ -71,7 +71,7 @@ public class HomeController {
 
         Locale locale = new Locale("en-US");
         for (Article article : articles) {
-            if (StringUtils.containsIgnoreCase(article.getContent(), query, locale)) {
+            if (StringUtils.containsIgnoreCase(article.getTitle(), query, locale)) {
                 articlesWithQuery.add(article);
             }
         }
@@ -86,5 +86,16 @@ public class HomeController {
 
         return "base-layout";
     }
+/*
+    @GetMapping("/index")
+    public  String newestPost(Model model){
 
+
+
+        model.addAttribute("view", "home/index");
+        model.addAttribute("articles", articles);
+
+        return "base-layout";
+    }
+*/
 }

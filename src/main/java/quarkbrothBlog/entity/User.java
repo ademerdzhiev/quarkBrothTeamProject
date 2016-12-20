@@ -21,6 +21,8 @@ public class User {
 
     private Set<Comment> comments;
 
+    private String avatarName;
+
 
 
 
@@ -35,10 +37,11 @@ public class User {
 
     private Set<Article> articles;
 
-    public User(String email, String fullName, String password) {
+    public User(String email, String fullName, String password, String avatarName) {
         this.email = email;
         this.password = password;
         this.fullName = fullName;
+
 
         this.roles = new HashSet<>();
         this.articles = new HashSet<>();
@@ -122,4 +125,20 @@ public class User {
         return Objects.equals(this.getId(),
         article.getAuthor().getId());
     }
+
+    @Column(name = "avatarName")
+    public String getAvatarName() {
+        return avatarName;
+    }
+
+    public void setAvatarName(String avatarName) {
+        this.avatarName = avatarName;
+    }
+
+    @Transient
+    public boolean isMe(User user){
+        return Objects.equals(this.getId(), user.getId());
+    }
+
+
 }

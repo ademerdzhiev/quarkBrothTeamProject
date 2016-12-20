@@ -2,10 +2,28 @@
     <div class="container body-container">
         <div class="row">
             <div id="main" class="col-sm-9">
-                <div>
-                    <span th:text="${user.email}"></span>
-                    <br/>
-                    <span th:text="${user.fullName}"></span>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <img class="img-responsive" style="max-width: 200px"
+                             th:src="@{/pics/{image}(image = ${user.avatarName})}"/>
+                    </div>
+
+                    <div class="col-sm-offset-4">
+
+                        <header><h2 th:text="${user.fullName}"></h2></header>
+                        <header><h2 th:text="${user.email}"></h2></header>
+                        <br/>
+
+                        <div>
+                            <th:block sec:authorize="isAuthenticated()"
+                                      th:if="${hasAuthority}">
+                                <a class="btn btn-success"
+                                   th:href="@{/profile/edit/{user}(user = ${user.id})}">Edit</a>
+                            </th:block>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
         </div>

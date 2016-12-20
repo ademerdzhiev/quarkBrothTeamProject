@@ -31,11 +31,7 @@ public class ArticleBindingModel {
 
     private Integer viewCount;
 
-    //public Integer getViewCount(){return viewCount;}
-
-    //public void setViewCount(Integer viewCount){this.viewCount = viewCount;}
-
-    private Integer categoryId;
+   private Integer categoryId;
 
     public Integer getCategoryId() {
         return categoryId;

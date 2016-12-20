@@ -129,7 +129,6 @@ public class ArticleController {
 
         model.addAttribute("comments", comments);
         model.addAttribute("article", article);
-        model.addAttribute("");
         model.addAttribute("view", "article/details");
 
         return "base-layout";
